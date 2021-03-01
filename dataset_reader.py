@@ -92,7 +92,7 @@ class NamedEntityResolutionReader(DatasetReader):
         dataset_dir = self.config.dataset_dir
 
         for train_dev_test_flag in ['train', 'dev', 'test']:
-            with open(dataset_dir+'train.tsv', 'r') as f:
+            with open(dataset_dir+train_dev_test_flag+'.tsv', 'r') as f:
                 for idx, line in enumerate(f):
                     if idx != 0 and line.strip() != '':
                         data = line.strip().split('\t')
