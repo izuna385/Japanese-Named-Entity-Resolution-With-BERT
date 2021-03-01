@@ -3,6 +3,7 @@ from typing import Dict, Iterable
 from overrides import overrides
 from commons import BOND_TOKEN
 import torch
+import copy
 from allennlp.data import Instance
 from allennlp.data.dataset_readers import DatasetReader
 from allennlp.data.fields import SpanField, ListField, TextField, MetadataField, ArrayField, SequenceLabelField, LabelField
@@ -119,6 +120,11 @@ class NamedEntityResolutionReader(DatasetReader):
                     if self.config.debug:
                         if idx == self.config.debug_sample_num:
                             break
+
+        if self.config.debug:
+            # only for debugging model
+            dev_mention_ids = copy.copy(train_mention_ids)
+            test_mention_ids = copy.copy(train_mention_ids)
 
         return train_mention_ids, dev_mention_ids, test_mention_ids, mention_id2data
 

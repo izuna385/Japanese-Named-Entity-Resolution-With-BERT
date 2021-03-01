@@ -38,7 +38,7 @@ class ResolutionLabelClassifier(Model):
             # scores = l_forcossim.mm(r_forcossim.t())
             scores = self.linear_for_cat(torch.cat((l_mention, r_mention), dim=1))
         else:
-            scores = self.linear_for_bond(l_and_r_cross)
+            scores = self.linear_for_cat(torch.cat((l_and_r_cross, torch.abs(l_mention - r_mention)), dim=1))
 
         loss = self.BCEWloss(scores.view(-1), label.float())
         output = {'loss': loss}
