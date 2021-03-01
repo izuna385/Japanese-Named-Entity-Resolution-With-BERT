@@ -24,6 +24,7 @@ class Params:
 
         parser.add_argument('-batch_size_for_train', action="store", default=64, type=int)
         parser.add_argument('-batch_size_for_eval', action="store", default=64, type=int)
+        parser.add_argument('-debug_sample_num', action="store", default=50000, type=int)
 
         self.opts = parser.parse_args(sys.argv[1:])
         print('\n===PARAMETERS===')

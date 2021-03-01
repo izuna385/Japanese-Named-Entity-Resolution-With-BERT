@@ -96,24 +96,28 @@ class NamedEntityResolutionReader(DatasetReader):
                 for idx, line in enumerate(f):
                     if idx != 0 and line.strip() != '':
                         data = line.strip().split('\t')
-                        l = data[0]
-                        r = data[1]
-                        label = int(data[2])
+                        try:
+                            l = data[0]
+                            r = data[1]
+                            label = int(data[2])
 
-                        mention_id = len(mention_id2data)
-                        mention_id2data.update({mention_id: {'l': l,
-                                                             'r': r,
-                                                             'label': label}})
+                            mention_id = len(mention_id2data)
+                            mention_id2data.update({mention_id: {'l': l,
+                                                                 'r': r,
+                                                                 'label': label}})
 
-                        if train_dev_test_flag == 'train':
-                            train_mention_ids.append(mention_id)
-                        elif train_dev_test_flag == 'dev':
-                            dev_mention_ids.append(mention_id)
-                        elif train_dev_test_flag == 'test':
-                            test_mention_ids.append(mention_id)
+                            if train_dev_test_flag == 'train':
+                                train_mention_ids.append(mention_id)
+                            elif train_dev_test_flag == 'dev':
+                                dev_mention_ids.append(mention_id)
+                            elif train_dev_test_flag == 'test':
+                                test_mention_ids.append(mention_id)
+                        except:
+                            print('Parse Error:', line.strip())
+                            continue
 
                     if self.config.debug:
-                        if idx == 10000:
+                        if idx == self.config.debug_sample_num:
                             break
 
         return train_mention_ids, dev_mention_ids, test_mention_ids, mention_id2data
