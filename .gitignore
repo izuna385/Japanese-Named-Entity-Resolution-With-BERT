@@ -1,0 +1,4 @@
+./.idea/*
+./dataset/*
+./vocab_file/*
+./japanese-bert/*
