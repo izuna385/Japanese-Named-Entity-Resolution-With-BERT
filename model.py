@@ -33,9 +33,6 @@ class ResolutionLabelClassifier(Model):
         l_and_r_cross = self.mention_encoder(l_plus_r)
 
         if self.args.scoring_function_for_model == 'sep':
-            # l_forcossim = normalize(l_mention, dim=1)
-            # r_forcossim = normalize(r_mention, dim=1)
-            # scores = l_forcossim.mm(r_forcossim.t())
             scores = self.linear_for_cat(torch.cat((l_mention, r_mention), dim=1))
         else:
             scores = self.linear_for_cat(torch.cat((l_and_r_cross, torch.abs(l_mention - r_mention)), dim=1))
