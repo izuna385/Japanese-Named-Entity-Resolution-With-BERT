@@ -63,16 +63,16 @@ class NamedEntityResolutionReader(DatasetReader):
     @overrides
     def text_to_instance(self, mention_uniq_id, data=None) -> Instance:
         l_tokenized = [Token('[CLS]')]
-        l_tokenized += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['l'])]
+        l_tokenized += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['l'])][:self.config.max_mention_length]
         l_tokenized.append(Token('[SEP]'))
         r_tokenized = [Token('[CLS]')]
-        r_tokenized += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['r'])]
+        r_tokenized += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['r'])][:self.config.max_mention_length]
         r_tokenized.append(Token('[SEP]'))
 
         l_plus_r = [Token('[CLS]')]
-        l_plus_r += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['l'])]
+        l_plus_r += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['l'])][:self.config.max_mention_length]
         l_plus_r += [Token(BOND_TOKEN)]
-        l_plus_r += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['r'])]
+        l_plus_r += [Token(split_token) for split_token in self.custom_tokenizer_class.tokenize(txt=data['r'])][:self.config.max_mention_length]
         l_plus_r += [Token('[SEP]')]
 
         context_field = TextField(l_tokenized, self.token_indexers)
