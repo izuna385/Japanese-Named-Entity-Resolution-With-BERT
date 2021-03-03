@@ -9,7 +9,7 @@ class Params:
         parser.add_argument('-dataset', action="store", default="bc5cdr", dest="dataset", type=str)
         parser.add_argument('-dataset_dir', action="store", default="./dataset/", type=str)
         parser.add_argument('-bert-name', action="store", default="japanese-bert", type=str)
-        parser.add_argument('-scoring_function_for_model', action="store", default="concat", type=str)
+        parser.add_argument('-scoring_function_for_model', action="store", default="bond", type=str)
 
         parser.add_argument('-cached_instance', action='store', default=False, type=strtobool)
         parser.add_argument('-lr', action="store", default=1e-6, type=float)

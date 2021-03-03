@@ -11,3 +11,11 @@
 * dev acc. ~%63 ,test acc. ~ 66% なので要改良。
 * 例えば [この論文](https://www.aclweb.org/anthology/2020.emnlp-main.363/) で使用している特徴量を組み込むことが考えられる。
 
+# 実験方法
+```
+$ conda create -n allennlp python=3.7
+$ conda activate allennlp
+$ pip install -r requirements.txt
+$ sh download.sh
+$ python3 main.py -num_epochs 3
+```
