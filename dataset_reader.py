@@ -19,6 +19,7 @@ import json
 from tokenizer import CustomTokenizer
 import numpy as np
 import pdb
+import Levenshtein
 
 
 class NamedEntityResolutionReader(DatasetReader):
@@ -51,9 +52,6 @@ class NamedEntityResolutionReader(DatasetReader):
             mention_ids += self.dev_mention_ids
         elif train_dev_test_flag == 'test':
             mention_ids += self.test_mention_ids
-        elif train_dev_test_flag == 'train_and_dev':
-            mention_ids += self.train_mention_ids
-            mention_ids += self.dev_mention_ids
 
 
         for idx, mention_uniq_id in tqdm(enumerate(mention_ids)):
@@ -78,10 +76,15 @@ class NamedEntityResolutionReader(DatasetReader):
 
         context_field = TextField(l_tokenized, self.token_indexers)
         fields = {"l": context_field}
+        fields['lev'] = ArrayField(np.array(Levenshtein.distance(data['l'], data['r'])))
+                                             # /  (max(len(data['l']), len(data['r'])))))
+
         fields['r'] = TextField(r_tokenized, self.token_indexers)
         fields['l_plus_r'] = TextField(l_plus_r, self.token_indexers)
         fields['label'] = ArrayField(np.array(data['label']))
         fields['mention_uniq_id'] = ArrayField(np.array(mention_uniq_id))
+        fields['subword_match_num'] = ArrayField(np.array(len(set(self.custom_tokenizer_class.tokenize(txt=data['l'])) &
+                                                              set(self.custom_tokenizer_class.tokenize(txt=data['r'])))))
 
 
         return Instance(fields)
@@ -121,10 +124,10 @@ class NamedEntityResolutionReader(DatasetReader):
                         if idx == self.config.debug_sample_num:
                             break
 
-        if self.config.debug:
-            # only for debugging model
-            dev_mention_ids = copy.copy(train_mention_ids)
-            test_mention_ids = copy.copy(train_mention_ids)
+        # if self.config.debug:
+        #     # only for debugging model
+        #     dev_mention_ids = copy.copy(train_mention_ids)
+        #     test_mention_ids = copy.copy(train_mention_ids)
 
         return train_mention_ids, dev_mention_ids, test_mention_ids, mention_id2data
 

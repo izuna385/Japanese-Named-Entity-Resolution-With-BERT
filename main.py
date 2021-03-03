@@ -4,6 +4,7 @@ import pdb
 from utils import build_vocab, build_data_loaders, build_trainer, emb_returner
 from encoder import Pooler_for_mention
 from model import ResolutionLabelClassifier
+from allennlp.training.util import evaluate
 
 if __name__ == '__main__':
     params = Params()
@@ -15,7 +16,7 @@ if __name__ == '__main__':
     train_and_dev = train + dev
     vocab = build_vocab(train_and_dev)
 
-    train_loader, dev_loader = build_data_loaders(config, train, dev)
+    train_loader, dev_loader, test_loader = build_data_loaders(config, train, dev, test)
     train_loader.index_with(vocab)
     dev_loader.index_with(vocab)
 
@@ -26,3 +27,12 @@ if __name__ == '__main__':
 
     trainer = build_trainer(config, model, train_loader, dev_loader)
     trainer.train()
+
+    model.eval()
+    vocab_test = build_vocab(test)
+    test_loader.index_with(vocab_test)
+    eval_result = evaluate(model=model,
+                           data_loader=test_loader,
+                           cuda_device=0,
+                           batch_weight_key="")
+    print(eval_result)

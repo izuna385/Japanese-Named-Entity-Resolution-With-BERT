@@ -1,5 +1,6 @@
 # BERTを用いた名寄せ解消
-* https://github.com/yagays/nayose-wikipedia-ja　のデータセットを用いた名寄せ解消
+* https://github.com/yagays/nayose-wikipedia-ja　
+* 上記データセットを用いた名寄せ解消
 
 # モデル
 * [InferSent](https://github.com/facebookresearch/InferSent) を一部参考に以下のモデルを組んだ。
