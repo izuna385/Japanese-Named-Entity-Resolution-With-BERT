@@ -8,7 +8,7 @@
 ![model](./img/0303_model.png)
 
 # 結果
-* dev acc. ~%63 ,test acc. ~ 66% なので要改良。
+* dev acc. ~%63 ,test acc. ~ 64% なので要改良。
 * 例えば [この論文](https://www.aclweb.org/anthology/2020.emnlp-main.363/) で使用している特徴量を組み込むことが考えられる。
 
 # 実験方法

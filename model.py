@@ -7,10 +7,7 @@ from allennlp.modules.seq2vec_encoders import Seq2VecEncoder, PytorchSeq2VecWrap
 from allennlp.models import Model
 from overrides import overrides
 from allennlp.training.metrics import CategoricalAccuracy, BooleanAccuracy
-from torch.nn.functional import normalize
-import torch.nn.functional as F
 import copy
-import pdb
 
 class ResolutionLabelClassifier(Model):
     def __init__(self, args,
@@ -37,7 +34,6 @@ class ResolutionLabelClassifier(Model):
         else:
             cated = torch.cat((l_and_r_cross, torch.abs(l_mention - r_mention)), dim=1)
             cated = torch.cat((cated, subword_match_num.view(-1, 1).float()), dim=1)
-            # cated = torch.cat((cated, self.cos(l_mention, r_mention).view(-1, 1).float()), dim=1)
             scores = self.linear_for_cat(torch.cat((cated, lev.view(-1, 1).float()), dim=1))
 
         loss = self.BCEWloss(scores.view(-1), label.float())
