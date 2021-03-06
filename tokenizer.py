@@ -53,20 +53,19 @@ class CustomTokenizer:
                 new_tokens += split_to_subwords
 
         return new_tokens
-
     def bert_model_and_vocab_downloader(self):
         if not os.path.exists('./japanese-bert/'):
             os.mkdir('./japanese-bert/')
             print('=== Downloading japanese-bert ===')
             # https://huggingface.co/cl-tohoku/bert-base-japanese
-            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/blob/main/config.json", './japanese-bert/config.json')
-            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/blob/main/pytorch_model.bin", './japanese-bert/pytorch_model.bin')
-            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/blob/main/config.json", './japanese-bert/config.json')
-            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/blob/main/tokenizer_config.json", './japanese-bert/tokenizer_config.json')
+            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/raw/main/config.json", './japanese-bert/config.json')
+            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/raw/main/pytorch_model.bin", './japanese-bert/pytorch_model.bin')
+            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/raw/main/config.json", './japanese-bert/config.json')
+            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/raw/main/tokenizer_config.json", './japanese-bert/tokenizer_config.json')
 
         if not os.path.exists('./vocab_file/'):
             os.mkdir('./vocab_file/')
-            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/blob/main/vocab.txt", './vocab_file/vocab.txt')
+            urllib.request.urlretrieve("https://huggingface.co/cl-tohoku/bert-base-japanese/raw/main/vocab.txt", './vocab_file/vocab.txt')
 
 
 if __name__ == '__main__':
