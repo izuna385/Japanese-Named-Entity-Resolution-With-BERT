@@ -1,11 +1,8 @@
 import transformers
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer, PretrainedTransformerIndexer
 import os
-from transformers import AutoTokenizer, AutoModel
 import urllib.request
 from parameters import Params
-from commons import BOND_TOKEN
-
 
 
 class CustomTokenizer:
